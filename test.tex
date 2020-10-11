@@ -1,0 +1,317 @@
+\documentclass[a4j,11pt]{jarticle}
+\usepackage {amsmath,amssymb} % さまざまな数式を用いるための設定
+\usepackage [dvipdfmx]{graphicx,color} % 図を取り込んだり、色を利用するための設定
+\usepackage{cases}
+\usepackage{caption}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{bm}
+\renewcommand{\baselinestretch}{0.9}
+\usepackage[top=20truemm,bottom=20truemm,left=25truemm,right=25truemm]{geometry}
+%\usepackage{tikz}
+%\usetikzlibrary{calc}
+%\usetikzlibrary{positioning}
+%\usetikzlibrary{arrows.meta}
+% \pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+	\LARGE レポート課題 \\
+\end{center}
+\vspace{-6mm}
+\begin{flushright}
+	\Large 所属： \\
+	\Large 学籍番号： \\
+	\Large 氏名：
+\end{flushright}
+
+%\begin {abstract}
+%\end {abstract}
+
+%==表紙=============================================================================
+
+
+
+%==================================================================================
+\vspace{-6mm}
+\section{圧電素子への入力電圧から変位までの伝達関数}
+\vspace{2mm}
+
+%----------------------------------------------------------------------------------
+% \vspace{-3mm}
+% \subsection{コPip制御}
+% \vspace{-1mm}
+
+ピエゾのモデルより以下の3式が立式できる．
+%
+\begin{equation}
+	\label{vin}
+	v_\mathrm{in} = R i + \frac{1}{C}\int{i \mathrm{d}t}
+\end{equation}
+%
+\begin{equation}
+	\label{xp}
+	x_p = K_p \frac{1}{C}\int{i \mathrm{d}t}
+\end{equation}
+%
+\begin{equation}
+	\label{motion}
+	M \ddot{x} + C_f \dot{x} + K_f x + \frac{K_s K_c}{K_s + K_c} (x - x_p) = 0
+\end{equation}
+%
+(\ref{vin})～(\ref{motion})式をそれぞれラプラス変換し，(\ref{la_vin})～(\ref{la_motion})式を求める．
+%
+\begin{equation}
+	\label{la_vin}
+	V_\mathrm{in} = R I + \frac{I}{Cs}
+\end{equation}
+%
+\begin{equation}
+	\label{la_xp}
+	X_p = K_p \frac{I}{Cs}
+\end{equation}
+%
+\begin{align}
+	(K_s & +K_c)(Ms^2 + C_f s + K_f)X + K_s K_c(X - X_p) = 0 \nonumber \vspace{5mm}                              \\
+	     & \therefore \frac{X}{X_p} = \frac{K_s K_c}{(K_s+K_c)(Ms^2 + C_f s + K_f) + K_s K_c}  \label{la_motion} 
+\end{align}
+%
+(\ref{la_vin}),(\ref{la_xp})式より，
+\begin{equation}
+	\label{la_xp2}
+	\frac{X_p}{V_\mathrm{in}} = \frac{K_p}{RCs+1}
+\end{equation}
+と計算され，(\ref{la_motion}),(\ref{la_xp2})式より伝達関数が以下で求まる．
+
+\begin{equation}
+	\label{la_x}
+	\frac{X}{V_\mathrm{in}} = \frac{K_p K_s K_c}{(RCs+1)\{(K_s+K_c)(Ms^2 + C_f s + K_f) + K_s K_c\}}
+\end{equation}
+
+% \begin{align}
+%     \label{}
+%     a & = 1 \rm{mm} \\
+%       & = 2 \\
+%       & = 3
+% \end{align}
+
+%==================================================================================
+\vspace{+10mm}
+\section{VCMへの入力電圧から変位までの伝達関数}
+\vspace{2mm}
+
+%----------------------------------------------------------------------------------
+% \vspace{-3mm}
+% \subsection{コPip制御}
+% \vspace{-1mm}
+
+VCMのモデルより以下の3式が立式できる．\cite{intuitive2019}
+%
+\begin{equation}
+	\label{q2_vin}
+	v_\mathrm{in} = L \frac{\mathrm{d}i}{\mathrm{d}t} + Ri + K_v \frac{\mathrm{d}x}{\mathrm{d}t}
+\end{equation}
+%
+\begin{equation}
+	\label{q2_f}
+	f = K_i i
+\end{equation}
+%
+\begin{equation}
+	\label{q2_motion}
+	(M \ddot{x} + C_s \dot{x} + K_s) x = f
+\end{equation}
+\vspace{8mm}
+%
+(\ref{q2_vin})～(\ref{q2_motion})式をそれぞれラプラス変換し，(\ref{q2_la_vin})～(\ref{q2_la_motion})式を求める．
+\newpage
+\begin{equation}
+	\label{q2_la_vin}
+	V_\mathrm{in} = L s I + R I + K_vsX
+\end{equation}
+%
+\begin{equation}
+	\label{q2_la_f}
+	F = K_i I
+\end{equation}
+%
+\begin{equation}
+	\label{q2_la_motion}
+	(M \ddot{x} + C_s \dot{x} + K_s)X = F
+\end{equation}
+%
+(\ref{q2_la_vin}),(\ref{q2_la_f})式より$I$を消去し，
+\begin{equation}
+	\label{q2_la_f2}
+	F = K_i \frac{V_\mathrm{in} - K_v s X}{Ls + R}
+\end{equation}
+となる．(\ref{q2_la_motion}),(\ref{q2_la_f2})式より伝達関数が以下で求まる．
+
+\begin{align}
+	\label{la_x}
+	(M \ddot{x}                        & + C_s \dot{x} + K_s) X = K_i \frac{V_\mathrm{in} - K_v s X}{Ls + R} \\
+	\therefore \frac{X}{V_\mathrm{in}} & = \frac{K_i}{(M \ddot{x} + C_s \dot{x} + K_s)(Ls+R) + K_i K_v s}    
+\end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% %==================================================================================
+% \newpage
+% \vspace{-6mm}
+% \section*{大問3：サーボ式加速度計}
+% \vspace{2mm}
+
+
+% %------------------------------------------------------------------------------------
+
+% %\begin{thebibliography}{9}
+% %
+% %\bibitem{1}
+% %{マーク・ホジキンソン（1990）『ロジャー・フェデラー』(鈴木佑依子訳)東洋館出版社．}
+% %
+% %\bibitem{2}
+% %{がん治療ブログ「がん診断に使用する画像診断機器・CTとMRIの違いとは？」，2017年10月26日(最終閲覧日：2018年5月13日) \\
+% %\url{http://ucc-radiotherapy.com/ct_mri/}}
+% %
+% %\end{thebibliography}
+
+
+% %------------------------------------------------------------------------------------
+
+% %\begin{figure}[!h]
+% %\begin{center}
+% %\includegraphics[width=0.65\linewidth]{result.png}
+% %\end{center}
+% %\vspace{-5mm}
+% %\caption{実験結果}
+% %\label{result}
+% %\end{figure}
+
+% %\begin{figure}[!h]
+% %\begin{minipage}{0.5\hsize}
+% %\begin{center}
+% %\includegraphics[width=0.5\linewidth]{robo1.png}
+% %\end{center}
+% %\vspace{-4mm}
+% %\caption{歩行ロボット}
+% %\label{robo1}
+% %\end{minipage}
+% %\begin{minipage}{0.5\hsize}
+% %\begin{center}
+% %\includegraphics[width=0.5\linewidth]{robo2.png}
+% %\end{center}
+% %\vspace{-4mm}
+% %\caption{ロボット}
+% %\label{robo2}
+% %\end{minipage}
+% %\end{figure}
+
+% \begin{table}[!h]
+%     \renewcommand{\arraystretch}{1.2}
+%     \begin{center}
+%         \caption{上の振子と下の振子の一次モードと二次モードの振幅と位相差}
+%         \begin{tabular}{|c|c|c|c|c|}\hline
+%                        & \multicolumn{2}{|c|}{1次モード} & \multicolumn{2}{|c|}{2次モード}                         \\ \cline{2-5}
+%                        & 振幅(deg)                       & 位相(rad)                       & 振幅(deg) & 位相(rad) \\ \hline \hline
+%             $\theta_1$ & 9.148                           & 1.600                           & 3.060     & -0.2023   \\ \hline
+%             $\theta_2$ & 6.610                           & 1.777                           & 8.122     & 2.817     \\ \hline
+%         \end{tabular}
+%         \label{振幅と位相差}
+%     \end{center}
+% \end{table}
+
+% %\begin{table}[!h]
+% %\renewcommand{\arraystretch}{1.2}
+% %\begin{center}
+% %\caption{対策1による技術面およびユーザの心理面における長所と短所}
+% %\begin{tabular}{|c|c|l|}\hline
+% % \multirow{2}{*}{技術面} & 長所 & 変更が容易 \\ \cline{2-3}
+% %										& 短所 & カメラの位置の変更も必要 \\ \hline
+% %\multirow{2}{*}{心理面} & 長所 & 口から声が聞こえてこない不快感がなくなる \\ \cline{2-3}
+% %										& 短所 & なし \\ \hline
+% %\end{tabular}
+% %\label{taisaku1}
+% %\end{center}
+% %\end{table}
+
+% \begin{itemize}
+%     \setlength{\itemsep}{0.5mm} % 項目の隙間
+%           \setlength{\parskip}{0mm} % 段落の隙間
+%     \item a
+%     \item b
+% \end{itemize}
+
+% \begin{numcases}
+%     {}
+%     脚の慣性モーメントI = \int_0^L L'^2(\rho 2 \pi L' dL')=\dfrac{\pi}{2}\rho L^4=\dfrac{1}{2}ML^2 \label{mom} \\
+%     角速度\omega=\dfrac{V}{L} \label{7}
+% \end{numcases}
+
+% \begin{eqnarray}
+%     \left\{
+%     \begin{array}{ll}
+%         T_H=150^\circ\mathrm{C} \\
+%         T_L=69.9^\circ\mathrm{C}
+%     \end{array} \right.
+%     \label{1}
+% \end{eqnarray}
+
+% \begin{align}
+%     \label{4}
+%     \begin{pmatrix}
+%         X_p \\
+%         Y_p
+%     \end{pmatrix} & =
+%     \begin{pmatrix}
+%         X_1 \\
+%         Y_1
+%     \end{pmatrix}+
+%     \begin{pmatrix}
+%         \cos\phi & -\sin\phi \\
+%         \sin\phi & \cos\phi
+%     \end{pmatrix}・
+%     \overrightarrow{J_1P} \nonumber \\
+%                               & =
+%     \begin{pmatrix}
+%         X_1 \\
+%         Y_1
+%     \end{pmatrix}+
+%     \begin{bmatrix}
+%  	    \cos\phi & -\sin\phi \\
+%         \sin\phi & \cos\phi
+%     \end{bmatrix}
+% %    \left[
+% %        \begin{array}{rr}
+% %            \cos\phi & -\sin\phi \\
+% %            \sin\phi & \cos\phi
+% %        \end{array}
+% %    \right]・
+%     \begin{pmatrix}
+%         \xi \\
+%         \eta
+%     \end{pmatrix}^{\mathrm{T}}
+% \end{align}
+
+% \begin{equation}
+%     \label{5}
+%     「P_c>P_h」\iff n>\dfrac{Q\times P}{25\times\dfrac{92}{100}\div24\times 1.163}\approx 0.99 \ \mathrm{mm}
+% \end{equation}
+
+% \fancyhead[CO]{参考文献}
+\bibliographystyle{junsrt}
+\bibliography{./refs}
+
+\end{document}
